@@ -46,8 +46,8 @@ public class Database {
             while(rs.next()){
                 String ime = rs.getString("Ime");
                 String prezime = rs.getString("Prezime");
-                Student student=new Student(ime, prezime);
-                students.add(student);
+                //Student student=new Student(ime, prezime);   promenjena je klasa student, zato sad ovde baca gresku
+                //students.add(student);
             }
            
            
@@ -76,7 +76,7 @@ public class Database {
         Database db = new Database();
         List<Student> students = db.getStudents();
         for (int i = 0; i < 2; i++) {
-            System.out.println(students.get(i).Ime);
+            System.out.println(students.get(i).name);
         }
         
     }
