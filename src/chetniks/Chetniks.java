@@ -29,5 +29,8 @@ public class Chetniks {
         for (int i = 0; i < companies.size(); i++) {
             System.out.println(companies.get(i).PIB + " " + companies.get(i).name);
         }
+        
+        sr.closeConn();
+        cr.closeConn();
     }
 }
