@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-package chetniks.database;
+package chetniks.repository;
 
 import chetniks.domain.Student;
 import java.sql.*;
@@ -14,46 +13,47 @@ import java.util.List;
  *
  * @author user
  */
-public class Database {
+public class StudentRepository {
+    
     private Connection connection;
    
-    public Database() {
+    public StudentRepository() {
        
         String url="";
         String user="root";
         String passw="";
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/prakse", user, passw);
-           
+            System.out.println("Povezano sa bazom");
         } catch (SQLException e) {
             e.printStackTrace();
            
         }
-       
-       
     }
    
-    public List<Student> getStudents(){
+    
+    public List<Student> getAllStudents(){
         List<Student> students= new ArrayList<>();
-        String url="";
-        String user="root";
-        String passw="";
+        
         try {
-            String query="SELECT * FROM student ORDER BY Ime";
-            Statement st=connection.createStatement();
-            ResultSet rs=st.executeQuery(query);
+            String query="SELECT * FROM student ORDER BY BrojIndeksa";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
            
             while(rs.next()){
-                String ime = rs.getString("Ime");
-                String prezime = rs.getString("Prezime");
-                //Student student=new Student(ime, prezime);   promenjena je klasa student, zato sad ovde baca gresku
-                //students.add(student);
+                int index = rs.getInt("BrojIndeksa");
+                String firstName = rs.getString("Ime");
+                String lastName = rs.getString("Prezime");
+                String studentEmail = rs.getString("StudentskiEmail");
+                String privateEmail = rs.getString("PrivatniEmail");
+                String telephoneNumber = rs.getString("BrojTelefona");
+                Student student = new Student(index, firstName, lastName, studentEmail, privateEmail, telephoneNumber, null, null);  //dodati za smer i nivo studija kada to resimo u bazi
+                students.add(student);
             }
            
-           
-           
-            rs.close();
+//            rs.close();       nisam siguran da li ovo treba
             st.close();
+            closeConn();
            
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,6 +61,7 @@ public class Database {
         }
         return students;
     }
+    
     public void closeConn(){
         try {
             if (connection != null && !connection.isClosed()) {
@@ -70,14 +71,4 @@ public class Database {
             e.printStackTrace();
         }
     }
-    
-    
-//    public static void main(String[] args) {
-//        Database db = new Database();
-//        List<Student> students = db.getStudents();
-//        for (int i = 0; i < 2; i++) {
-//            System.out.println(students.get(i).firstName);
-//        }
-//        
-//    }
 }

@@ -11,12 +11,14 @@ package chetniks.domain;
 public class Company {
     public int PIB;
     public String name;
+    public String phoneNumber;
     public String webSite;
     public String address;
 
-    public Company(int PIB, String name, String webSite, String address) {
+    public Company(int PIB, String name, String phoneNumber, String webSite, String address) {
         this.PIB = PIB;
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.webSite = webSite;
         this.address = address;
     }
@@ -37,6 +39,14 @@ public class Company {
         this.name = name;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    
     public String getWebSite() {
         return webSite;
     }

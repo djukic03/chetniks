@@ -9,8 +9,8 @@ package chetniks.domain;
  * @author user
  */
 public class Student {
-    public int indexNumber;
-    public String name;
+    public int index;
+    public String firstName;
     public String lastName;
     public String studentEmail;
     public String privateEmail;
@@ -18,9 +18,9 @@ public class Student {
     public String major;
     public String studiesLevel;
 
-    public Student(int indexNumber, String name, String lastName, String studentEmail, String privateEmail, String telephoneNumber, String major, String studiesLevel) {
-        this.indexNumber = indexNumber;
-        this.name = name;
+    public Student(int index, String firstName, String lastName, String studentEmail, String privateEmail, String telephoneNumber, String major, String studiesLevel) {
+        this.index = index;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.studentEmail = studentEmail;
         this.privateEmail = privateEmail;
@@ -29,20 +29,20 @@ public class Student {
         this.studiesLevel = studiesLevel;
     }
 
-    public int getIndexNumber() {
-        return indexNumber;
+    public int getIndex() {
+        return index;
     }
 
-    public void setIndexNumber(int indexNumber) {
-        this.indexNumber = indexNumber;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String FirstName) {
+        this.firstName = FirstName;
     }
 
     public String getLastName() {

@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package chetniks.repository;
 
-package chetniks.database;
-
-import chetniks.domain.Student;
+import chetniks.domain.Company;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,53 +13,53 @@ import java.util.List;
  *
  * @author user
  */
-public class Database {
+public class CompanyRepository {
     private Connection connection;
    
-    public Database() {
+    public CompanyRepository() {
        
         String url="";
         String user="root";
         String passw="";
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/prakse", user, passw);
-           
+            System.out.println("Povezano sa bazom");
         } catch (SQLException e) {
             e.printStackTrace();
            
         }
-       
-       
     }
    
-    public List<Student> getStudents(){
-        List<Student> students= new ArrayList<>();
-        String url="";
-        String user="root";
-        String passw="";
+    
+    public List<Company> getAllCompanies(){
+        List<Company> companies= new ArrayList<>();
+        
         try {
-            String query="SELECT * FROM student ORDER BY Ime";
-            Statement st=connection.createStatement();
-            ResultSet rs=st.executeQuery(query);
+            String query="SELECT * FROM kompanija";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
            
             while(rs.next()){
-                String ime = rs.getString("Ime");
-                String prezime = rs.getString("Prezime");
-                //Student student=new Student(ime, prezime);   promenjena je klasa student, zato sad ovde baca gresku
-                //students.add(student);
+                int PIB = rs.getInt("PIB");
+                String name = rs.getString("Naziv");
+                String phoneNumber = rs.getString("BrojTelefona");
+                String webSite = rs.getString("WebAdresa");
+                String address = rs.getString("Adresa");
+                Company company = new Company(PIB, name, phoneNumber, webSite, address);
+                companies.add(company);
             }
            
-           
-           
-            rs.close();
+//            rs.close();       nisam siguran da li ovo treba
             st.close();
+            closeConn();
            
         } catch (SQLException e) {
             e.printStackTrace();
            
         }
-        return students;
+        return companies;
     }
+    
     public void closeConn(){
         try {
             if (connection != null && !connection.isClosed()) {
@@ -70,14 +69,4 @@ public class Database {
             e.printStackTrace();
         }
     }
-    
-    
-//    public static void main(String[] args) {
-//        Database db = new Database();
-//        List<Student> students = db.getStudents();
-//        for (int i = 0; i < 2; i++) {
-//            System.out.println(students.get(i).firstName);
-//        }
-//        
-//    }
 }
